@@ -153,14 +153,16 @@ def _token_banner():
         )
 
 
-def _advanced_controls():
+def _advanced_controls(prefix):
     with st.expander("⚙️ Advanced: model controls"):
         temperature = st.slider(
             "Temperature (creativity)", 0.0, 1.5, 0.7, 0.1,
+            key=f"{prefix}_temperature",
             help="0 = strict and predictable, 1.5 = wild and creative. "
                  "Lesson plans usually want 0.5–0.8.",
         )
         max_tokens = st.slider("Max length", 400, 3000, 1600, 100,
+                               key=f"{prefix}_max_tokens",
                                help="Caps how long the answer can be.")
     return temperature, max_tokens
 
@@ -183,7 +185,7 @@ def tab_lesson_plan():
         minutes = st.slider("Class length (minutes)", 30, 120, 50, 5)
         goals = st.text_area("Learning goals (optional)",
                              placeholder="e.g. Students can label each stage of the cycle")
-    temperature, max_tokens = _advanced_controls()
+    temperature, max_tokens = _advanced_controls("lesson")
     if st.button("Generate lesson plan", type="primary", use_container_width=True):
         if not topic.strip() or not subject.strip():
             st.warning("Give me a topic and a subject first.")
@@ -216,7 +218,7 @@ def tab_quiz():
         qtype = st.selectbox("Question type",
                              ["multiple choice", "true/false", "short answer", "mixed"])
     include_key = st.checkbox("Include answer key", value=True)
-    temperature, max_tokens = _advanced_controls()
+    temperature, max_tokens = _advanced_controls("quiz")
     if st.button("Generate quiz", type="primary", use_container_width=True):
         if not topic.strip() or not subject.strip():
             st.warning("Give me a topic and a subject first.")
@@ -249,7 +251,7 @@ def tab_explain():
         relate_to = st.text_input("Relate it to (optional)",
                                   placeholder="e.g. basketball",
                                   help="The explanation will use this in an analogy.")
-    temperature, max_tokens = _advanced_controls()
+    temperature, max_tokens = _advanced_controls("explain")
     if st.button("Explain it", type="primary", use_container_width=True):
         if not concept.strip():
             st.warning("Tell me what to explain first.")
