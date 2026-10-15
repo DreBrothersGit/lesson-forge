@@ -28,7 +28,7 @@ except ImportError:
     HAVE_HF = False
 
 # Any instruction-tuned chat model works here. Swap freely.
-MODEL_ID = "meta-llama/Meta-Llama-3.1-8B-Instruct"
+MODEL_ID = "meta-llama/Llama-3.1-8B-Instruct"
 
 
 # ----------------------------------------------------------------------------
